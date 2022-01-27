@@ -1,3 +1,3 @@
 # Title
 
-[Link 3](https://someth(ing).com)
+[Link 3](https://somet(hi)ng.com)
