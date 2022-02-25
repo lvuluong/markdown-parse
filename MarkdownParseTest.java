@@ -44,4 +44,43 @@ public class MarkdownParseTest {
         List<String> links = MarkdownParse.getLinks(contents);
         assertEquals(null, links);
     }
+
+    @Test
+    public void getLinkSnippet1() throws IOException{
+        Path fileName = Path.of("snippet1.md");
+	    String contents = Files.readString(fileName);
+        List<String> links = MarkdownParse.getLinks(contents);
+        List<String> newLink = List.of
+        ( "[a link](url.com)" ,"another link`","cod[e","code]" );
+        assertEquals(newLink, links);
+    }
+
+    @Test
+    public void getLinkSnippet2() throws IOException{
+        Path fileName = Path.of("snippet2.md");
+	    String contents = Files.readString(fileName);
+        List<String> links = MarkdownParse.getLinks(contents);
+        List<String> newLink = List.of
+        ( "[a nested link](b.com)" ,
+        "a nested parenthesized url",
+        "some escaped [ brackets ]" );
+        assertEquals(newLink, links);
+    }
+
+    @Test
+    public void getLinkSnippet3() throws IOException{
+        Path fileName = Path.of("snippet3.md");
+	    String contents = Files.readString(fileName);
+        List<String> links = MarkdownParse.getLinks(contents);
+        List<String> newLink = List.of
+        ("[this title text is really long and takes up more than one line",
+        "and has some line breaks]( https://www.twitter.com )",
+        "this title text is really long and takes up more than one line",
+        "[this link doesn't have a closing parenthesis](github.com",
+        "And there's still some more text after that.",
+        "[this link doesn't have a closing parenthesis for a while](https://cse.ucsd.edu/",
+        ")",
+        "And then there's more text");
+        assertEquals(newLink, links);
+    }
 }
